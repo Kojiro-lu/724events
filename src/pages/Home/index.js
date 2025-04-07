@@ -13,18 +13,12 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const { data, isLoading } = useData();
+  const { data } = useData();
+  const sortedEvents = data?.events.sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+  const lastEvent = sortedEvents?.[0];
 
-  if (isLoading || !data?.events) {
-    return <p>Chargement des données...</p>;
-  }
-
-  // On prend le dernier élément du tableau events
-  const last = data.events[data.events.length - 1];
-
-  if (!last) {
-    return <p>Aucune prestation disponible.</p>;
-  }
   return (
     <>
       <header>
@@ -126,11 +120,11 @@ const Page = () => {
         <div className="col presta">
           <h3>Notre dernière prestation</h3>
           <EventCard
-            imageSrc={last.cover}
-            title={last.title}
-            date={new Date(last.date)}
+            imageSrc={lastEvent?.cover}
+            title={lastEvent?.title}
+            date={new Date(lastEvent?.date)}
             small
-            label="boom"
+            label={lastEvent?.type}
           />
         </div>
         <div className="col contact">
