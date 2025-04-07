@@ -11,7 +11,11 @@ const EventCard = ({
   label,
   small = false,
   ...props
-}) => (
+}) => {
+  const validDate =
+    date instanceof Date && !Number.isNaN(date.getTime()) ? date : new Date();
+
+  return (
     <div
       data-testid="card-testid"
       className={`EventCard${small ? " EventCard--small" : ""}`}
@@ -23,10 +27,11 @@ const EventCard = ({
       </div>
       <div className="EventCard__descriptionContainer">
         <div className="EventCard__title">{title}</div>
-        <div className="EventCard__month">{getMonth(date)}</div>
+        <div className="EventCard__month">{getMonth(validDate)}</div>
       </div>
     </div>
   );
+};
 
 EventCard.propTypes = {
   imageSrc: PropTypes.string.isRequired,
@@ -40,6 +45,6 @@ EventCard.propTypes = {
 EventCard.defaultProps = {
   imageAlt: "image",
   small: false,
-}
+};
 
 export default EventCard;
