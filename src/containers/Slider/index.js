@@ -8,17 +8,14 @@ const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
 
-  // On clone le tableau pour éviter de modifier data.focus
-  // puis on trie les événements du plus récent au plus ancien
   const byDateDesc = data?.focus
     ? data.focus
-        .slice()
-        .sort((evtA, evtB) =>
-          new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
+        .slice() // Clonage du tableau pour éviter de modifier le tableau d'origine
+        .sort(
+          (evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1) // trie les événements du plus récent au plus ancien
         )
     : [];
 
-  // Fonction pour passer à la slide suivante toutes les 5 secondes et on utilise useCallback pour que la fonction ne soit pas recréée à chaque render
   const nextCard = useCallback(() => {
     setIndex((prevIndex) =>
       prevIndex < byDateDesc.length - 1 ? prevIndex + 1 : 0
@@ -26,8 +23,8 @@ const Slider = () => {
   }, [byDateDesc.length]);
 
   useEffect(() => {
-    const interval = setInterval(nextCard, 5000);
-    return () => clearInterval(interval);
+    const interval = setInterval(nextCard, 5000); // création de l'intervalle
+    return () => clearInterval(interval); // Nettoyage de l'intervalle
   }, [nextCard]);
 
   return (
