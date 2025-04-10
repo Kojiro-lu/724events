@@ -11,52 +11,14 @@ const mockContactApi = () =>
 
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
-
-  // État unique pour gérer tous les champs du formulaire
-  const [formData, setFormData] = useState({
-    lastName: "",
-    firstName: "",
-    email: "",
-    message: "",
-    type: "",
-  });
-
-  // Fonction générique pour gérer les champs input/textarea
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  // Fonction spécifique pour gérer le changement dans le Select
-  const handleSelectChange = (newValue) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      type: newValue,
-    }));
-  };
-
-  const resetForm = () => {
-    setFormData({
-      lastName: "",
-      firstName: "",
-      email: "",
-      message: "",
-      type: "",
-    });
-  };
-
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
       setSending(true);
+      // We try to call mockContactApi
       try {
         await mockContactApi();
         setSending(false);
-        onSuccess(); // Notifie le parent que l'envoi a réussi
-        resetForm(); // Réinitialise les champs après envoi
       } catch (err) {
         setSending(false);
         onError(err);
@@ -64,53 +26,29 @@ const Form = ({ onSuccess, onError }) => {
     },
     [onSuccess, onError]
   );
-
   return (
     <form onSubmit={sendContact}>
       <div className="row">
         <div className="col">
-          <Field
-            name="lastName"
-            placeholder=""
-            label="Nom"
-            value={formData.lastName}
-            onChange={handleChange}
-          />
-          <Field
-            name="firstName"
-            placeholder=""
-            label="Prénom"
-            value={formData.firstName}
-            onChange={handleChange}
-          />
+          <Field placeholder="" label="Nom" />
+          <Field placeholder="" label="Prénom" />
           <Select
-            name="type"
             selection={["Personel", "Entreprise"]}
-            onChange={handleSelectChange}
-            value={formData.type}
+            onChange={() => null}
             label="Personel / Entreprise"
             type="large"
             titleEmpty
           />
-          <Field
-            name="email"
-            placeholder=""
-            label="Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
+          <Field placeholder="" label="Email" />
           <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
             {sending ? "En cours" : "Envoyer"}
           </Button>
         </div>
         <div className="col">
           <Field
-            name="message"
             placeholder="message"
             label="Message"
             type={FIELD_TYPES.TEXTAREA}
-            value={formData.message}
-            onChange={handleChange}
           />
         </div>
       </div>
