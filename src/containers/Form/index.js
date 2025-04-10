@@ -96,7 +96,6 @@ const Form = ({ onSuccess, onError }) => {
             name="email"
             placeholder=""
             label="Email"
-            type="email"
             value={formData.email}
             onChange={handleChange}
           />
