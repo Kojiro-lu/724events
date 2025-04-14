@@ -119,15 +119,13 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre dernière prestation</h3>
-          {lastEvent && (
-            <EventCard
-              imageSrc={lastEvent?.cover}
-              title={lastEvent?.title}
-              date={new Date(lastEvent?.date)}
-              small
-              label={lastEvent?.type}
-            />
-          )}
+          <EventCard
+            imageSrc={lastEvent?.cover || "default_image_url"} // Ajouter une valeur par défaut
+            title={lastEvent?.title || "Default Title"}
+            label={lastEvent?.type || "Default Label"}
+            date={new Date(lastEvent?.date)}
+            small
+          />
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>

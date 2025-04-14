@@ -23,8 +23,8 @@ const Slider = () => {
   }, [byDateDesc.length]);
 
   useEffect(() => {
-    const interval = setInterval(nextCard, 5000); // création de l'intervalle
-    return () => clearInterval(interval); // Nettoyage de l'intervalle
+    const interval = setInterval(nextCard, 5000);
+    return () => clearInterval(interval);
   }, [nextCard]);
 
   return (
