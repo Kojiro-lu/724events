@@ -15,6 +15,7 @@ const EventList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredEvents = (data?.events || [])
+    .sort((a, b) => a.id - b.id) // Trie les événements par id
     .filter((event) => !type || event.type === type) // Filtre les événements en fonction de la catégorie sélectionnée (type)
     .filter(
       (_, index) =>
