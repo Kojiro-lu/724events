@@ -9,11 +9,9 @@ const Slider = () => {
   const [index, setIndex] = useState(0);
 
   const byDateDesc = data?.focus
-    ? data.focus
-        .slice() // Clonage du tableau pour éviter de modifier le tableau d'origine
-        .sort(
-          (evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1) // trie les événements du plus récent au plus ancien
-        )
+    ? data.focus.slice().sort(
+        (evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1) // trie les événements du plus récent au plus ancien
+      )
     : [];
 
   const nextCard = useCallback(() => {
@@ -32,7 +30,7 @@ const Slider = () => {
       {byDateDesc.length > 0 ? (
         byDateDesc.map((event, idx) => (
           <div
-            key={event.title || idx} // Utiliser le titre comme clé, sinon utiliser l'index
+            key={event.title || idx}
             className={`SlideCard SlideCard--${
               index === idx ? "display" : "hide"
             }`}
@@ -54,7 +52,7 @@ const Slider = () => {
         <div className="SlideCard__pagination">
           {byDateDesc.map((event, radioIdx) => (
             <input
-              key={event.title || radioIdx} // Utiliser également le titre comme clé pour les boutons radio
+              key={event.title || radioIdx}
               type="radio"
               name="radio-button"
               checked={index === radioIdx}

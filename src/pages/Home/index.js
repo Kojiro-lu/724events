@@ -120,7 +120,7 @@ const Page = () => {
         <div className="col presta">
           <h3>Notre dernière prestation</h3>
           <EventCard
-            imageSrc={lastEvent?.cover || "default_image_url"} // Ajouter une valeur par défaut
+            imageSrc={lastEvent?.cover || "default_image_url"}
             title={lastEvent?.title || "Default Title"}
             label={lastEvent?.type || "Default Label"}
             date={new Date(lastEvent?.date)}
